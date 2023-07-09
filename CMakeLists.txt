@@ -26,8 +26,7 @@ SET(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/bin)
 
 FILE(GLOB SRC "${PROJECT_SOURCE_DIR}/src/*.cpp")
 include_directories(${PROJECT_SOURCE_DIR}/include)
-
-include(${PROJECT_TOP_DIR}/cmake/Dependent.cmake)
+include_directories(${PROJECT_SOURCE_DIR}/lib/eigen)
 
 add_library(LTI INTERFACE)
 add_executable(develop ${SRC})

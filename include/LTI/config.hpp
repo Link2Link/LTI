@@ -2,8 +2,7 @@
 #define LTI_PROJECT_INCLUDE_LTI_CONFIG_HPP_
 
 
-
-
+#include "Eigen/Dense"
 
 
 
