@@ -29,7 +29,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/lib/eigen)
 
 add_library(LTI INTERFACE)
-add_executable(develop ${SRC})
+add_executable(develop main.cpp)
 
 option(ENABLE_UNIT_TESTS "Enable unit tests" ON)
 option(ENABLE_LCOV "Enable code coverage tests" OFF)
