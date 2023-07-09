@@ -1,5 +1,5 @@
 #include "doctest/doctest.h"
-#include "LTI/statespace.hpp"
+#include "LTI/StateSpace.hpp"
 #include "iostream"
 
 
