@@ -2,7 +2,12 @@
 #define LTI_PROJECT_INCLUDE_LTI_CONFIG_HPP_
 
 
-#include "Eigen/Dense"
+#ifdef TcCppLib
+	#include "TcEigen/Dense"
+#else
+	#include "Eigen/Dense"
+#endif
+
 
 
 

@@ -1,7 +1,8 @@
 #ifndef LTI_PROJECT_INCLUDE_LTI_INCLUDE_HPP_
 #define LTI_PROJECT_INCLUDE_LTI_INCLUDE_HPP_
 
-#define TcCppLib
+//#define TcCppLib
+
 #include "config.hpp"
 
 
