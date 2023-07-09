@@ -9,6 +9,9 @@ message(STATUS "Current : ${PROJECT_NAME}")
 SET(TEST_INSTALL_DIR ${PROJECT_TOP_DIR}/bin/test)
 include(${PROJECT_TOP_DIR}/cmake/TestDepend.cmake)
 
+include_directories(${PROJECT_TOP_DIR}/include)
+include_directories(${PROJECT_TOP_DIR}/lib/eigen)
+
 enable_testing()
 
 FILE(GLOB TEST_SRC "${PROJECT_SOURCE_DIR}/*.cpp")
