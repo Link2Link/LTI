@@ -4,6 +4,9 @@
 //#define TcCppLib
 
 #include "config.hpp"
+#include "ODEsolver.hpp"
+#include "StateSpace.hpp"
+
 
 
 
