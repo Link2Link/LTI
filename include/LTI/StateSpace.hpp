@@ -13,7 +13,7 @@ namespace LTI
 
 	// continue LTI system
 	// order N, input u_size, output y_size
-	template<size_t N, size_t u_size, size_t y_size, size_t CatchLength = 10>
+	template<size_t N, size_t u_size, size_t y_size, size_t CatchLength = 2>
 	class StateSpace
 	{
 	 public:
@@ -25,6 +25,7 @@ namespace LTI
 		std::array<State<N>, CatchLength> x_catch;
 		std::array<State<u_size>, CatchLength> u_catch;
 		std::array<State<y_size>, CatchLength> y_catch;
+		std::array<double, CatchLength> t_catch;
 
 		Eigen::Matrix<double, N, N> A;
 		Eigen::Matrix<double, N, u_size> B;
@@ -73,9 +74,9 @@ namespace LTI
 		{
 			this->x = x;
 		}
-		State<N> getState()
+		State<N> getState(int idx = 0)
 		{
-			return this->x;
+			return x_catch[safeIdx(idx)];
 		}
 
 		void setInput(const State<u_size>& u)
@@ -83,14 +84,24 @@ namespace LTI
 			this->u = u;
 		}
 
-		State<u_size> getInput()
+		State<u_size> getInput(int idx = 0)
 		{
-			return this->u;
+			return u_catch[safeIdx(idx)];
 		}
 
-		State<y_size> getOutput()
+		State<y_size> getOutput(int idx = 0)
 		{
-			return this->y;
+			return y_catch[safeIdx(idx)];
+		}
+
+		State<N> getdx(int idx = 0)
+		{
+			return getdx(x_catch[safeIdx(idx)], u_catch[safeIdx(idx)]);
+		}
+
+		State<N> getdx(const State<N> & x, const State<u_size> & u)
+		{
+			return LTI(x, u, A, B);
 		}
 
 		// solve the ODE by step dt
@@ -109,6 +120,7 @@ namespace LTI
 
 		}
 
+
 	 private:
 		static State<N> LTI(const State<N>& x,
 			const State<u_size>& u,
@@ -121,16 +133,43 @@ namespace LTI
 			return dx;
 		}
 
-		// TODO
 		void rollingCatch()
 		{
+			for (int k=CatchLength-1; k>0; --k)
+			{
+				x_catch[k] = x_catch[k-1];
+				u_catch[k] = u_catch[k-1];
+				y_catch[k] = y_catch[k-1];
+				t_catch[k] = t_catch[k-1];
+			}
+
+			x_catch[0] = this->x;
+			u_catch[0] = this->u;
+			y_catch[0] = this->y;
+			t_catch[0] = this->t;
 
 		}
 
-		// TODO
+
+
+		int safeIdx(int idx)
+		{
+			idx = (idx >= 0) ? idx : -idx;
+			if (idx >= CatchLength)
+				return CatchLength - 1;
+			return idx;
+		}
+
+	 public:
 		void cleanCatch()
 		{
-
+			for (int k=0; k<CatchLength; ++k)
+			{
+				x_catch[k].setZero();
+				u_catch[k].setZero();
+				y_catch[k].setZero();
+				t_catch[k] = 0;
+			}
 		}
 
 	};
