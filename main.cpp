@@ -1,27 +1,15 @@
 #include <iostream>
 #include <array>
+#include "LTI/TrackingDifferentiator.hpp"
 using namespace std;
+using namespace LTI;
+
+
 int main()
 {
+	LTD<5> TD(2);
 
-	constexpr int CatchLength = 10;
-	std::array<double, CatchLength> Q;
-	for (int k=0; k<CatchLength; ++k)
-	{
-		Q[k] = k+1;
-	}
-
-
-	for (int k=0; k<CatchLength-1; ++k)
-	{
-		Q[k] = Q[k+1];
-	}
-
-	for (auto item : Q)
-	{
-		cout << item << endl;
-	}
-
+	cout << inner::nchoosek(5,3) << endl;
 
 	return 0;
 

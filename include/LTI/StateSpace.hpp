@@ -34,10 +34,6 @@ namespace LTI
 
 		void cleanAll()
 		{
-			x.setZero();
-			y.setZero();
-			u.setZero();
-			t = 0;
 			A.setZero();
 			B.setZero();
 			C.setZero();
@@ -170,7 +166,12 @@ namespace LTI
 				y_catch[k].setZero();
 				t_catch[k] = 0;
 			}
+			x.setZero();
+			y.setZero();
+			u.setZero();
+			t = 0;
 		}
+
 
 	};
 
