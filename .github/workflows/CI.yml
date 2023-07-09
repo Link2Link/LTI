@@ -31,8 +31,7 @@ jobs:
 
       - name: Debug workflows
         run: |
-          ls 
-          ls lib/
+          ls lib
           
 
       - name: Configure CMake
