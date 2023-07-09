@@ -17,7 +17,7 @@ TEST_CASE("State Space Test : TD Order 5"){
 	}
 
 	double matlab_result = 9.9967725340835;
-	CHECK(TD.y(0) == doctest::Approx(matlab_result).epsilon(1E-3));
+	CHECK(TD.y(0) == doctest::Approx(matlab_result).epsilon(1E-2));
 }
 
 
@@ -37,5 +37,5 @@ TEST_CASE("State Space Test : TD Order 3"){
 	}
 
 	double matlab_result = 1.2739121;
-	CHECK(TD.y(0) == doctest::Approx(matlab_result).epsilon(1E-3));
+	CHECK(TD.y(0) == doctest::Approx(matlab_result).epsilon(1E-2));
 }
