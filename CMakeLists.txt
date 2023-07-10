@@ -45,7 +45,7 @@ endif()
 
 
 # copy all lib to Twincat SDK
-if($ENV{TWINCATSDK})
+if(DEFINED ENV{TWINCATSDK})
     file(COPY Include DESTINATION $ENV{TWINCATSDK})
     MESSAGE(STATUS "Copy to Twincat SDK: $ENV{TWINCATSDK}")
 endif()
