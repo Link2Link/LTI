@@ -25,7 +25,7 @@ set(PROJECT_TOP_DIR ${PROJECT_SOURCE_DIR})
 SET(CMAKE_INSTALL_PREFIX ${PROJECT_SOURCE_DIR}/bin)
 
 FILE(GLOB SRC "${PROJECT_SOURCE_DIR}/src/*.cpp")
-include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/Include)
 include_directories(${PROJECT_SOURCE_DIR}/lib/eigen)
 
 add_library(LTI INTERFACE)
@@ -42,3 +42,8 @@ if(${ENABLE_UNIT_TESTS})
     add_definitions(-DENABLE_UNIT_TESTS)
     add_subdirectory(test)
 endif()
+
+
+# copy all lib to Twincat SDK
+file(COPY Include DESTINATION $ENV{TWINCATSDK})
+MESSAGE(STATUS "Copy to Twincat SDK: $ENV{TWINCATSDK}")
