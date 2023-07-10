@@ -117,7 +117,7 @@ namespace LTI
 		}
 
 
-	 private:
+    protected:
 		static State<N> LTI(const State<N>& x,
 			const State<u_size>& u,
 			const double& t,
@@ -175,11 +175,65 @@ namespace LTI
 
 	};
 
-	template<size_t N, size_t u_size, size_t y_size>
-	class DiscreteStateSpace
-	{
+    template<size_t N, size_t u_size, size_t y_size, size_t CatchLength = 2>
+    class DiscreteStateSpace : public StateSpace<N, u_size, y_size, CatchLength> {
+    public:
+        void step(double dt) {
+            State<N> x_;
 
-	};
+            // Discrete state transfer
+            x_ = this->A * this->x + this->B * this->u;
+
+            this->x = x_;
+            this->y = this->C * this->x + this->D * this->u;
+            this->t += dt;
+
+            this->rollingCatch();
+
+        }
+
+
+    };
+
+
+    enum C2D_TYPE {
+        Tustin = 0,
+        ZOH
+    };
+
+    template<size_t N, size_t u_size, size_t y_size, size_t CatchLength = 2>
+    DiscreteStateSpace<N, u_size, y_size, CatchLength>
+    C2D(const StateSpace<N, u_size, y_size, CatchLength> &css, double T = 1E-3, C2D_TYPE type = C2D_TYPE::Tustin) {
+        DiscreteStateSpace<N, u_size, y_size, CatchLength> dss;
+
+        Eigen::Matrix<double, N, N> A = css.A;
+        Eigen::Matrix<double, N, u_size> B = css.B;
+        Eigen::Matrix<double, y_size, N> C = css.C;
+        Eigen::Matrix<double, y_size, u_size> D = css.D;
+
+        Eigen::Matrix<double, N, N> Ad = Eigen::Matrix<double, N, N>::Zero();
+        Eigen::Matrix<double, N, u_size> Bd = Eigen::Matrix<double, N, u_size>::Zero();
+        Eigen::Matrix<double, y_size, N> Cd = Eigen::Matrix<double, y_size, N>::Zero();
+        Eigen::Matrix<double, y_size, u_size> Dd = Eigen::Matrix<double, y_size, u_size>::Zero();
+
+        Eigen::Matrix<double, N, N> I = Eigen::Matrix<double, N, N>::Identity();
+
+
+        auto Ad_ = (I - A*(T/2)).inverse();
+        Ad = (I + A*(T/2))*Ad_;
+        Bd = (Ad + I)*B*(T/2);
+        Cd = C*Ad_;
+        Dd = Cd*B*(T/2)+D;
+
+
+        dss.cleanAll();
+        dss.A = Ad;
+        dss.B = Bd;
+        dss.C = Cd;
+        dss.D = Dd;
+
+        return dss;
+    }
 
 }
 

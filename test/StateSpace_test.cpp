@@ -166,3 +166,32 @@ TEST_CASE("State Space Test : Catch Index Safety"){
 	CHECK(ss.getState(-10) == ss.getState(10));
 
 }
+
+TEST_CASE("Discrete State Space Test : C2D Test"){
+    using namespace LTI;
+    StateSpace<2, 1, 1> ss;
+    ss.A << 0, 1,
+            0, 0;
+    ss.B << 0, 1;
+    ss.C << 1, 0;
+
+    auto dss = C2D(ss, 1E-3, C2D_TYPE::Tustin);
+
+
+    ss.x(0) = 0;
+    ss.u(0) = 1;
+
+    dss.x(0) = 0;
+    dss.u(0) = 1;
+
+    State<1> y;
+
+    for (; ss.t < 5; )
+    {
+        ss.step(1E-3);
+        dss.step(1E-3);
+//        std::cout << " dss t: " << dss.t << " y: "  << dss.y << " ||||  ss t: " << ss.t << " y: "  << ss.y << std::endl;
+    }
+    y(0) = 0.5* pow(ss.t, 2);   // 解析表达式 y = 1/2*t^2
+    CHECK(ss.y(0) == doctest::Approx(dss.y(0)).epsilon(1E-1));
+}
