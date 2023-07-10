@@ -7,7 +7,11 @@ using namespace LTI;
 
 int main()
 {
-	LTD<5> TD(2);
+	Eigen::Matrix3d C;
+	cout << C << endl;
+	C.setIdentity();
+	cout << C << endl;
+
 
 	cout << inner::nchoosek(5,3) << endl;
 
