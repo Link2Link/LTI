@@ -291,7 +291,7 @@ TEST_CASE("LADRC2 Test : reset during run")
 		log_maxoutput = (log_maxoutput<adrc.ControlOutput)?adrc.ControlOutput:log_maxoutput;
 		log_minoutput = (log_minoutput>adrc.ControlOutput)?adrc.ControlOutput:log_minoutput;
 
-	cout << "t : " << Plant.t << ", Plant : " << Plant.y(0) << ", adrc out: " << adrc.ControlOutput << ", ESO : " << adrc.ESO.x(0) << endl;
+//	cout << "t : " << Plant.t << ", Plant : " << Plant.y(0) << ", adrc out: " << adrc.ControlOutput << ", ESO : " << adrc.ESO.x(0) << endl;
 	}
 	CHECK(Plant.y(0) == doctest::Approx(1).epsilon(1E-6));
 	CHECK(adrc.ControlOutput == doctest::Approx(1).epsilon(1E-6));
