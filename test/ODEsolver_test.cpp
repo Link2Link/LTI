@@ -22,7 +22,7 @@ TEST_CASE("ODE Test : First Order Integrator") {
 		t += 1E-3;
 	}
 	auto trans = v * t;
-	CHECK(y(0) == doctest::Approx(trans).epsilon(1E-6));
+	CHECK(y(0) == doctest::Approx(trans).epsilon(1E-12));
 }
 
 TEST_CASE("ODE Test : Second Order Integrator") {
@@ -44,6 +44,5 @@ TEST_CASE("ODE Test : Second Order Integrator") {
 		t += 1E-3;
 	}
 	auto trans = 0.5 * a * pow(t, 2);
-	CHECK(y(0) == doctest::Approx(trans).epsilon(1E-6));
-	cout << trans << endl;
+	CHECK(y(0) == doctest::Approx(trans).epsilon(1E-12));
 }
