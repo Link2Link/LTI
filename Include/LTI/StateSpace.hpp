@@ -197,7 +197,7 @@ namespace LTI
 
 
     enum C2D_TYPE {
-        Tustin = 0,
+        Tustin = 0,		// only Tustin implemented
         ZOH
     };
 
@@ -219,6 +219,7 @@ namespace LTI
         Eigen::Matrix<double, N, N> I = Eigen::Matrix<double, N, N>::Identity();
 
 
+		// C2D_TYPE::Tustin
         auto Ad_ = (I - A*(T/2)).inverse();
         Ad = (I + A*(T/2))*Ad_;
         Bd = (Ad + I)*B*(T/2);
