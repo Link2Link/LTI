@@ -30,12 +30,6 @@ namespace LTI
 			return K*u;
 		}
 
-		// First Order Integrator with K b
-		static dState<1> FirstOrderIntegratorWithKb (const State<1>& y, const State<1>& u, const double& t, double K, double b)
-		{
-			return K*u;
-		}
-
 		// Second Order Integrator
 		static dState<2> SecondOrderIntegrator (const State<2>& y, const State<1>& u, const double& t)
 		{
