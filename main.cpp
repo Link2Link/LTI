@@ -1,20 +1,29 @@
 #include <iostream>
 #include <array>
-#include "LTI/TrackingDifferentiator.hpp"
+#include "LTI2/matrix/math.hpp"
 using namespace std;
-using namespace LTI;
+using namespace matrix;
 
 
 int main()
 {
-	Eigen::Matrix3d C;
-	cout << C << endl;
-	C.setIdentity();
-	cout << C << endl;
+    Matrix<double, 3, 4> A;
+    Matrix<double, 4, 5> B;
+
+    A(0,0) = 1;
+    A(1,1) = 1;
+    A(2,2) = 1;
+
+    B(0,0) = 1;
+    B(1,1) = 2;
+    B(2,2) = 3;
+    B(3,3) = 4;
 
 
-	cout << inner::nchoosek(5,3) << endl;
+    auto C = A*B;
 
-	return 0;
+    std::cout << C << std::endl;
+
+    return 0;
 
 }
